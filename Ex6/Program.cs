@@ -95,6 +95,7 @@ public class Program
         {
             Console.WriteLine("You aren't alive asshole! Please enter a valid year");
             Main(null);
+            
         }
     }
 }
