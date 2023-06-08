@@ -50,7 +50,9 @@ public class Program
 
         var birthDate = ToDateTime(yearInt, monthInt, dayInt);
         ValidateBirthDate(birthDate);
-        Console.WriteLine($"your birthday is {birthDate.ToShortDateString()}!");
+        Console.WriteLine($"Your birthday is {birthDate.ToShortDateString()}!");
+        IsBirthday(birthDate);
+        Console.WriteLine();
     }
 
     public static int ToInt(string datePart)
@@ -91,11 +93,27 @@ public class Program
             Main(null);
         }
 
-        if (date.Year > DateTime.Now.Year) 
+        if (date.Year > DateTime.Now.Year)
         {
             Console.WriteLine("You aren't alive asshole! Please enter a valid year");
             Main(null);
-            
+
         }
+
+    }
+
+    public static void IsBirthday(DateTime date)
+    {
+        if ((date.Month == DateTime.Now.Month) && (date.Day == DateTime.Now.Day))
+        {
+            Console.WriteLine("Happy Birthday You Cunt!");
+        }
+    }
+
+
+
+    public static void ChineseSign(DateTime date)
+    {
+        
     }
 }
