@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.VisualBasic;
@@ -53,6 +54,8 @@ public class Program
         Console.WriteLine($"Your birthday is {birthDate.ToShortDateString()}!");
         IsBirthday(birthDate);
         Console.WriteLine();
+        var chineseSign = ChineseSign(birthDate.Year);
+        Console.WriteLine($"You were born in the year of the {chineseSign}!");
     }
 
     public static int ToInt(string datePart)
@@ -87,7 +90,7 @@ public class Program
 
     public static void ValidateBirthDate(DateTime date)
     {
-        if (date.Year < 1900)
+        if (date.Year < 1912)
         {
             Console.WriteLine("You are too old asshole! Please enter a valid year");
             Main(null);
@@ -112,8 +115,114 @@ public class Program
 
 
 
-    public static void ChineseSign(DateTime date)
+    public static string ChineseSign(int year)
     {
-        
+        List<Animal> initialAnimalList = new List<Animal>
+        {
+            new Animal
+            {
+                AnimalName = "Rat",
+                Year = 1912
+            },
+
+            new Animal
+            {
+                AnimalName = "Ox",
+                Year = 1913
+            },
+
+            new Animal
+            {
+                AnimalName = "Tiger",
+                Year = 1914
+            },
+
+            new Animal
+            {
+                AnimalName = "Rabbit",
+                Year = 1915
+            },
+
+            new Animal
+            {
+                AnimalName = "Dragon",
+                Year = 1916
+            },
+
+            new Animal
+            {
+                AnimalName = "Snake",
+                Year = 1917
+            },
+
+            new Animal
+            {
+                AnimalName = "Horse",
+                Year = 1918
+            },
+
+            new Animal
+            {
+            AnimalName = "Sheep",
+            Year = 1919
+            },
+
+            new Animal
+            {
+                AnimalName = "Monkey",
+                Year = 1920
+            },
+
+            new Animal
+            {
+                AnimalName = "Monkey",
+                Year = 1920
+            },
+
+            new Animal
+            {
+                AnimalName = "Rooster",
+                Year = 1921
+            },
+
+            new Animal
+            {
+                AnimalName = "Dog",
+                Year = 1922
+            },
+
+            new Animal
+            {
+                AnimalName = "Pig",
+                Year = 1923
+            }
+        };
+
+        var animalList = new List<Animal>();
+
+        foreach (Animal animal in initialAnimalList)
+        {
+            for (int i = animal.Year; i <= DateTime.Now.Year; i += 12)
+            {
+                animalList.Add(new Animal
+                {
+                    AnimalName = animal.AnimalName,
+                    Year = i
+                });
+            }
+        }
+      
+        //use animal list to determ the users chinese horoscope 
+
+        foreach (var animal in animalList)
+        {
+            if (animal.Year == year)
+            {
+                return animal.AnimalName;
+            }
+            
+        }
+
+        return "";
     }
 }
