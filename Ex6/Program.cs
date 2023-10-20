@@ -16,46 +16,91 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        //instruction: Give me your birth year...
-        Console.WriteLine("Give me your birth year...");
-        var year = Console.ReadLine();
-        var yearInt = ToInt(year);
 
-        if (yearInt == 0)
-        {
-            Console.WriteLine("invalid year. Please re-enter year with a valid int");
-            Main(null);
-        }
+        //instruction: Give me your birth year...
+        var year = GetYear();
 
         //instruction: Give me your birth month...
-        Console.WriteLine("Give me your birth month...");
-        var month = Console.ReadLine();
-        var monthInt = ToInt(month);
-
-        if (monthInt == 0)
-        {
-            Console.WriteLine("invalid year. Please re-enter year with a valid int");
-            Main(null);
-        }
+        var month = GetMonth();
 
         //instruction: Give me your birth day...
-        Console.WriteLine("Give me your birth day...");
-        var day = Console.ReadLine();
-        var dayInt = ToInt(day);
+        var day = GetDay();
 
-        if (dayInt == 0)
-        {
-            Console.WriteLine("invalid year. Please re-enter year with a valid int");
-            Main(null);
-        }
 
-        var birthDate = ToDateTime(yearInt, monthInt, dayInt);
+        var birthDate = ToDateTime(year, month, day);
         ValidateBirthDate(birthDate);
         Console.WriteLine($"Your birthday is {birthDate.ToShortDateString()}!");
         IsBirthday(birthDate);
         Console.WriteLine();
         var chineseSign = ChineseSign(birthDate.Year);
         Console.WriteLine($"You were born in the year of the {chineseSign}!");
+        try
+        {
+          
+        }
+        catch (Exception ex)
+        {
+            Main(null);
+        }
+    }
+    public static int TryAgain(string dateElementType)
+    {
+        //sort by date element type (if for year, month, day) 
+        if (dateElementType == "Year")
+        {
+            return GetYear();
+        }
+        if (dateElementType == "Month")
+        {
+            return GetMonth();
+        }
+        if (dateElementType == "Day")
+        {
+            return GetDay();
+        }
+        return 0;
+    }
+
+    private static int GetDay()
+    {
+        Console.WriteLine("Give me your birth day...");
+        var day = Console.ReadLine();
+        var dayInt = ToInt(day);
+
+        if (dayInt <= 0 || dayInt >= 32)
+        {
+            Console.WriteLine("invalid year. Please re-enter year with a valid int");
+            return TryAgain("Day");
+        }
+        return dayInt;
+    }
+
+    private static int GetMonth()
+    {
+        Console.WriteLine("Give me your birth month...");
+        var month = Console.ReadLine();
+        var monthInt = ToInt(month);
+
+        if (monthInt <= 0 || monthInt >= 13)
+        {
+            Console.WriteLine("invalid year. Please re-enter year with a valid int");
+            return TryAgain("Month");
+        }
+        return monthInt;
+    }
+
+    private static int GetYear()
+    {
+        Console.WriteLine("Give me your birth year...");
+        var year = Console.ReadLine();
+        var yearInt = ToInt(year);
+
+        if (yearInt <= 1900 || yearInt >= 2023)
+        {
+            Console.WriteLine("invalid year. Please re-enter year with a valid int");
+            return TryAgain("Year");
+        }
+        return yearInt;
     }
 
     public static int ToInt(string datePart)
